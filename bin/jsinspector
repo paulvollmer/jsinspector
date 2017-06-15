@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
-var program = require('commander');
-var inspector = require('../lib');
+var program = require('commander')
+var colors = require('colors')
+var inspector = require('../lib')
 
 // jsinspector commandline interface
 program
   .version('0.0.1')
   .option('-f, --file [f]', 'the file we want to inspect', '')
   .option('-m, --min-threshold [t]', 'The minimum threshold to start', 10)
-  .parse(process.argv);
+  .option('-o, --output [f]', "The output format [text, json]", 'text')
+  .parse(process.argv)
 
 if (program.file === '') {
-  console.log('missing filepath');
+  console.log('missing filepath')
   process.exit(127)
 }
 
@@ -19,13 +21,21 @@ if (program.file === '') {
 // console.log('minThreshold', program.minThreshold);
 
 inspector(program.file, program.minThreshold, (report) => {
-  console.log(JSON.stringify(report, '', '  '));
+  switch (program.output) {
+    case 'json':
+      console.log(JSON.stringify(report, '', '  '))
+      break;
+    default:
+      console.log('highest threshold: ', report.highestThreshold)
+      console.log('found duplication:')
+      for (var i = 0; i < report.result.length; i++) {
+        var data = report.result[i].instances
+        for (var j = 0; j < data.length; j++) {
+          console.log(`\nLine from ${data[j].lines[0]} to ${data[j].lines[1]}`)
+          console.log(colors.yellow(data[j].code))
+        }
+      }
+      break
+  }
 
-  // for (var i = 0; i < report.result.length; i++) {
-  //   var data = report.result[i].instances
-  //   for (var j = 0; j < data.length; j++) {
-  //     console.log(data[j].lines);
-  //     console.log(data[j].code);
-  //   }
-  // }
 })
