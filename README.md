@@ -1,5 +1,8 @@
 # jsinspector
 
+**This is experimental, do not use in production**
+
+
 ## installation
 
 ```
@@ -9,6 +12,7 @@ npm install paulvollmer/jsinspector --save
 # or install it globally
 npm install -g paulvollmer/jsinspector
 ```
+
 
 ## Usage
 
