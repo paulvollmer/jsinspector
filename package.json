@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/paulvollmer/jsinspector#readme",
   "dependencies": {
+    "colors": "^1.1.2",
     "commander": "^2.9.0",
     "jsinspect": "^0.12.4"
   }
