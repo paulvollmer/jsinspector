@@ -26,13 +26,15 @@ inspector(program.file, program.minThreshold, (report) => {
       console.log(JSON.stringify(report, '', '  '))
       break;
     default:
-      console.log('highest threshold: ', report.highestThreshold)
-      console.log('found duplication:')
-      for (var i = 0; i < report.result.length; i++) {
-        var data = report.result[i].instances
-        for (var j = 0; j < data.length; j++) {
-          console.log(`\nLine from ${data[j].lines[0]} to ${data[j].lines[1]}`)
-          console.log(colors.yellow(data[j].code))
+      if (report.result !== null) {
+        console.log('highest threshold: ', report.highestThreshold)
+        console.log('found duplication:')
+        for (var i = 0; i < report.result.length; i++) {
+          var data = report.result[i].instances
+          for (var j = 0; j < data.length; j++) {
+            console.log(`\nLine from ${data[j].lines[0]} to ${data[j].lines[1]}`)
+            console.log(colors.yellow(data[j].code))
+          }
         }
       }
       break
