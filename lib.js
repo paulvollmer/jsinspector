@@ -8,8 +8,9 @@ const child_process = require("child_process")
 var results = []
 
 function inspector(file, threshold, callback) {
+  // TODO: switch from exec to code use of the jsinspect package.
+  // this was the fastest way to build this proof of concept demo
   var command = `./node_modules/.bin/jsinspect -t ${threshold} -r json ${file}`
-
   child_process.exec(command, (err, stdout, stderr) => {
     var result = JSON.parse(stdout)
 
