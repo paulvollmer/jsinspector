@@ -25,19 +25,91 @@ inspector(program.file, program.minThreshold, (report) => {
     case 'json':
       console.log(JSON.stringify(report, '', '  '))
       break;
+    case 'html':
+      console.log(htmlReport(report))
+      break;
     default:
-      if (report.result !== null) {
-        console.log('highest threshold: ', report.highestThreshold)
-        console.log('found duplication:')
-        for (var i = 0; i < report.result.length; i++) {
-          var data = report.result[i].instances
-          for (var j = 0; j < data.length; j++) {
-            console.log(`\nLine from ${data[j].lines[0]} to ${data[j].lines[1]}`)
-            console.log(colors.yellow(data[j].code))
-          }
-        }
-      }
+      console.log(textReport(report));
       break
   }
-
 })
+
+function textreport(report) {
+  if (report.result !== null) {
+    console.log('highest threshold: ', report.highestThreshold)
+    console.log('found duplication:')
+    for (var i = 0; i < report.result.length; i++) {
+      var data = report.result[i].instances
+      for (var j = 0; j < data.length; j++) {
+        console.log(`\nLine from ${data[j].lines[0]} to ${data[j].lines[1]}`)
+        console.log(colors.yellow(data[j].code))
+      }
+    }
+  }
+}
+
+function htmlReport(report) {
+  var style = 'pre {color: blue}'
+  var html = ['<html><head><style>'+style+'</style></head><body>']
+  html.push(`<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">`)
+
+  html.push('<div class="container">')
+  html.push('<div class="row">')
+  html.push('<div class="col-md-12">')
+  html.push('<h1>jsinspector report</h1>')
+  html.push('</div>')
+  html.push('<div class="col-md-12">')
+
+  html.push('<ul>')
+  for (var r = 0; r < report.result.length; r++) {
+    html.push(`<p>Item ${r}<p>`)
+    for (var i = 0; i < report.result[r].instances.length; i++) {
+      var inst = report.result[r].instances[i]
+      html.push(`<code> Line ${inst.lines[0]} to ${inst.lines[1]}<code>`)
+      html.push('<pre>')
+      html.push(report.result[r].instances[i].code)
+      html.push('</pre>')
+    }
+  }
+  html.push('</ul>')
+
+  html.push('<div>')
+  html.push('<h2>threshold matrix</h2>')
+  html.push('<table>')
+
+  var latestData = null
+  if (report.result !== null) {
+    for (var d = report.data.length-1; d >= 0; d--) {
+
+        html.push('<tr>')
+        html.push('<td>')
+        html.push(`threshold: ${report.data[d].threshold}`)
+        html.push('</td>')
+
+        for (var j = 0; j < report.data[d].data.length; j++) {
+          html.push('<td>')
+          var lastInst = null
+          for (var ic = 0; ic < report.data[d].data[j].instances.length; ic++) {
+            // filter out duplicated instances codes
+            // if (lastInst !== report.data[d].data[j].instances[0]) {
+              lastInst = report.data[d].data[j].instances[ic]
+              lastData = lastInst
+              // latest = report.data[d].data[j].instances[ic].code
+              html.push(`line ${report.data[d].data[j].instances[ic].lines}`)
+              html.push('<pre>'+report.data[d].data[j].instances[ic].code+'</pre>')
+            // }
+          }
+          html.push('</td>')
+      }
+      html.push('</tr>')
+    }
+  }
+  html.push('</table>')
+  html.push('</div>')
+
+  html.push('</div>')
+  html.push('</div>')
+  html.push('</div>')
+  html.push('</body></html>')
+  return html.join('\n')
+}
