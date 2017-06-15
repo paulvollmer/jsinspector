@@ -1,0 +1,30 @@
+// jsinspector commandline interface
+
+var program = require('commander');
+var inspector = require('./lib');
+
+program
+  .version('0.0.1')
+  .option('-f, --file [f]', 'the file we want to inspect', '')
+  .option('-m, --min-threshold [t]', 'The minimum threshold to start', 10)
+  .parse(process.argv);
+
+if (program.file === '') {
+  console.log('missing filepath');
+  process.exit(127)
+}
+
+// console.log('file', program.file);
+// console.log('minThreshold', program.minThreshold);
+
+inspector(program.file, program.minThreshold, (report) => {
+  console.log(JSON.stringify(report, '', '  '));
+
+  // for (var i = 0; i < report.result.length; i++) {
+  //   var data = report.result[i].instances
+  //   for (var j = 0; j < data.length; j++) {
+  //     console.log(data[j].lines);
+  //     console.log(data[j].code);
+  //   }
+  // }
+})
