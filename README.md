@@ -1,7 +1,17 @@
 # jsinspector
 
+## installation
+
+```
+# install it as dependencies
+npm install paulvollmer/jsinspector --save
+
+# or install it globally
+npm install -g paulvollmer/jsinspector
+```
+
 ## Usage
 
 ```
-node inspector.js -f fixtures/simple.js
+jsinspector -f fixtures/simple.js
 ```
