@@ -8,6 +8,8 @@ const child_process = require("child_process")
 var results = []
 
 function inspector(file, threshold, callback) {
+  // console.log('inspect with threshold', threshold);
+
   // TODO: switch from exec to code use of the jsinspect package.
   // this was the fastest way to build this proof of concept demo
   var command = `./node_modules/.bin/jsinspect -t ${threshold} -r json ${file}`
@@ -22,7 +24,7 @@ function inspector(file, threshold, callback) {
       if (results.length !== 0) {
         report.highestThreshold = threshold-1
         report.result = results[results.length-1].data
-        // report.data = resultsm // add all reports to the returned data
+        report.data = results // add all reports to the returned data
       }
       callback(report)
 
