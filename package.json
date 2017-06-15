@@ -1,0 +1,27 @@
+{
+  "name": "jsinspector",
+  "version": "0.0.1",
+  "description": "javascript code duplication inspector",
+  "main": "inspector.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulvollmer/jsinspector.git"
+  },
+  "keywords": [
+    "code",
+    "duplication"
+  ],
+  "author": "Paul Vollmer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulvollmer/jsinspector/issues"
+  },
+  "homepage": "https://github.com/paulvollmer/jsinspector#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "jsinspect": "^0.12.4"
+  }
+}
