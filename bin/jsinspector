@@ -1,8 +1,9 @@
-// jsinspector commandline interface
+#!/usr/bin/env node
 
 var program = require('commander');
-var inspector = require('./lib');
+var inspector = require('../lib');
 
+// jsinspector commandline interface
 program
   .version('0.0.1')
   .option('-f, --file [f]', 'the file we want to inspect', '')
