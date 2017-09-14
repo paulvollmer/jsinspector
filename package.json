@@ -2,9 +2,10 @@
   "name": "jsinspector",
   "version": "0.0.1",
   "description": "javascript code duplication inspector",
-  "main": "inspector.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "./node_modules/.bin/standard bin/jsinspector",
+    "test": "./bin/jsinspector -f fixtures/simple.js"
   },
   "bin": {
     "jsinspector": "./bin/jsinspector"
@@ -27,5 +28,8 @@
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "jsinspect": "^0.12.4"
+  },
+  "devDependencies": {
+    "standard": "^10.0.2"
   }
 }
