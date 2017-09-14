@@ -2,7 +2,7 @@
 
 var program = require('commander')
 var colors = require('colors')
-var inspector = require('../lib')
+var inspector = require('../src')
 
 // jsinspector commandline interface
 program
@@ -34,7 +34,7 @@ inspector(program.file, program.minThreshold, (report) => {
   }
 })
 
-function textreport(report) {
+function textReport(report) {
   if (report.result !== null) {
     console.log('highest threshold: ', report.highestThreshold)
     console.log('found duplication:')
