@@ -9,7 +9,7 @@ program
   .version('0.0.1')
   .option('-f, --file [f]', 'the file we want to inspect', '')
   .option('-m, --min-threshold [t]', 'The minimum threshold to start', 10)
-  .option('-o, --output [f]', 'The output format [text, json]', 'text')
+  .option('-o, --output [f]', 'The output format [text, json, html]', 'text')
   .parse(process.argv)
 
 if (program.file === '') {

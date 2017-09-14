@@ -5,7 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/standard bin/jsinspector",
-    "test": "./bin/jsinspector -f fixtures/simple.js"
+    "test": "npm run test-format-text && npm run test-format-json && npm run test-format-html",
+    "test-format-text": "./bin/jsinspector -f fixtures/simple.js",
+    "test-format-json": "./bin/jsinspector -f fixtures/simple.js -o json",
+    "test-format-html": "./bin/jsinspector -f fixtures/simple.js -o html"
   },
   "bin": {
     "jsinspector": "./bin/jsinspector"
