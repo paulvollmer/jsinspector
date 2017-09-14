@@ -4,7 +4,9 @@ var program = require('commander')
 var colors = require('colors')
 var inspector = require('../src')
 
-// jsinspector commandline interface
+/**
+ * jsinspector commandline interface
+ */
 program
   .version('0.0.1')
   .option('-f, --file [f]', 'the file we want to inspect', '')
@@ -17,9 +19,6 @@ if (program.file === '') {
   process.exit(127)
 }
 
-// console.log('file', program.file);
-// console.log('minThreshold', program.minThreshold);
-
 inspector(program.file, program.minThreshold, (report) => {
   switch (program.output) {
     case 'json':
@@ -27,6 +26,9 @@ inspector(program.file, program.minThreshold, (report) => {
       break
     case 'html':
       console.log(htmlReport(report))
+      break
+    case 'text':
+      console.log(textReport(report))
       break
     default:
       console.log(textReport(report))
@@ -77,7 +79,7 @@ function htmlReport (report) {
   html.push('<h2>threshold matrix</h2>')
   html.push('<table>')
 
-  var latestData = null
+  // var lastData = null
   if (report.result !== null) {
     for (var d = report.data.length - 1; d >= 0; d--) {
       html.push('<tr>')
@@ -87,16 +89,16 @@ function htmlReport (report) {
 
       for (var j = 0; j < report.data[d].data.length; j++) {
         html.push('<td>')
-        var lastInst = null
+        // var lastInst = null
         for (var ic = 0; ic < report.data[d].data[j].instances.length; ic++) {
-            // filter out duplicated instances codes
-            // if (lastInst !== report.data[d].data[j].instances[0]) {
-          lastInst = report.data[d].data[j].instances[ic]
-          lastData = lastInst
-              // latest = report.data[d].data[j].instances[ic].code
+          // filter out duplicated instances codes
+          // if (lastInst !== report.data[d].data[j].instances[0]) {
+          // lastInst = report.data[d].data[j].instances[ic]
+          // lastData = lastInst
+          // latest = report.data[d].data[j].instances[ic].code
           html.push(`<code>line ${report.data[d].data[j].instances[ic].lines}</code>`)
           html.push('<pre>' + report.data[d].data[j].instances[ic].code + '</pre>')
-            // }
+          // }
         }
         html.push('</td>')
       }
