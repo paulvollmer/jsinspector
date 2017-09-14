@@ -3,11 +3,11 @@
 //
 // using https://github.com/danielstjules/jsinspect to find duplicated code
 
-const child_process = require("child_process")
+const child_process = require('child_process')
 
 var results = []
 
-function inspector(file, threshold, callback) {
+function inspector (file, threshold, callback) {
   // console.log('inspect with threshold', threshold);
 
   // TODO: switch from exec to code use of the jsinspect package.
@@ -22,15 +22,14 @@ function inspector(file, threshold, callback) {
         result: null
       }
       if (results.length !== 0) {
-        report.highestThreshold = threshold-1
-        report.result = results[results.length-1].data
+        report.highestThreshold = threshold - 1
+        report.result = results[results.length - 1].data
         report.data = results // add all reports to the returned data
       }
       callback(report)
-
     } else {
       results.push({threshold: threshold, data: result})
-      inspector(file, threshold+1, callback)
+      inspector(file, threshold + 1, callback)
     }
   })
 }
