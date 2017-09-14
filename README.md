@@ -1,4 +1,4 @@
-# jsinspector
+# jsinspector [![Build Status](https://travis-ci.org/paulvollmer/jsinspector.svg?branch=master)](https://travis-ci.org/paulvollmer/jsinspector)
 
 **This is experimental, do not use in production**
 
