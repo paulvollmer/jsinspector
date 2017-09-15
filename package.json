@@ -27,6 +27,9 @@
     "url": "https://github.com/paulvollmer/jsinspector/issues"
   },
   "homepage": "https://github.com/paulvollmer/jsinspector#readme",
+  "engines": {
+    "node" : ">=6.0.0 <8.0.0"
+  },
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.11.0",

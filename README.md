@@ -16,9 +16,20 @@ npm install paulvollmer/jsinspector --save
 npm install -g paulvollmer/jsinspector
 ```
 
+_nodejs v6 or above is required_
 
-## Usage
+
+## usage as cli
 
 ```
 jsinspector -f fixtures/simple.js
+```
+
+
+## usage as module
+
+```
+inspector('path/to/source.js', MIN_THRESHOLD, function(report) {
+  console.log(report)
+})
 ```
