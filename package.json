@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/standard bin/jsinspector",
-    "test": "npm run test-format-text && npm run test-format-json && npm run test-format-html",
+    "test": "./node_modules/.bin/mocha -t 20000 test",
     "test-format-text": "./bin/jsinspector -f fixtures/simple.js",
     "test-format-json": "./bin/jsinspector -f fixtures/simple.js -o json",
     "test-format-html": "./bin/jsinspector -f fixtures/simple.js -o html"
@@ -33,6 +33,7 @@
     "jsinspect": "^0.12.7"
   },
   "devDependencies": {
+    "mocha": "^3.5.3",
     "standard": "^10.0.3"
   }
 }
