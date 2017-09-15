@@ -7,8 +7,8 @@ describe('inspector', function() {
   it('simple.js', function(done) {
 
     inspector('./fixtures/simple.js', MIN_THRESHOLD, (report) => {
-      assert.equal(report.highestThreshold, 17)
-      
+      assert.equal(report.highestThreshold, 19)
+
       assert.equal(report.result.length, 1)
       assert.equal(report.result[0].instances.length, 2)
 
