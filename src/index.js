@@ -9,12 +9,12 @@ var results = []
  *
  * using https://github.com/danielstjules/jsinspect to find duplicated code
  */
-function inspector (file, threshold, callback) {
+function inspector (file, cfg, callback) {
   var config = {
-    threshold: threshold
-    // identifiers:  identifiers,
-    // literals:     literals,
-    // minInstances: minInstances
+    threshold:    cfg.threshold || 10,
+    identifiers:  cfg.identifiers || true,
+    literals:     cfg.literals || true,
+    minInstances: cfg.minInstances || 2
   }
   var inspect = new jsinspect.Inspector([file], config)
   var reporterConfig = {
@@ -33,15 +33,17 @@ function inspector (file, threshold, callback) {
         result: null
       }
       if (results.length !== 0) {
-        report.highestThreshold = threshold - 1
+        report.highestThreshold = config.threshold - 1
         report.result = results[results.length - 1].data
         report.data = results // add all reports to the returned data
       }
       results = [] // reset the temporary results array
       callback(report)
     } else {
-      results.push({threshold: threshold, data: result})
-      inspector(file, threshold + 1, callback)
+      results.push({config: config, data: result})
+
+      config.threshold = config.threshold+1
+      inspector(file, config, callback)
     }
   }
 }

@@ -19,7 +19,7 @@ if (program.file === '') {
   process.exit(127)
 }
 
-inspector(program.file, program.minThreshold, (report) => {
+inspector(program.file, {threshold: program.minThreshold}, (report) => {
   switch (program.output) {
     case 'json':
       console.log(JSON.stringify(report, '', '  '))
