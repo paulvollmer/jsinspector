@@ -4,12 +4,8 @@
   "description": "javascript code duplication inspector",
   "main": "src/index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/standard bin/jsinspector src/*.js",
-    "test": "./node_modules/.bin/mocha -t 20000 test",
-    "test-cli": "npm run test-format-text && npm run test-format-json && npm run test-format-html",
-    "test-format-text": "./bin/jsinspector -f fixtures/simple.js",
-    "test-format-json": "./bin/jsinspector -f fixtures/simple.js -o json",
-    "test-format-html": "./bin/jsinspector -f fixtures/simple.js -o html"
+    "lint": "make lint",
+    "test": "make test"
   },
   "bin": {
     "jsinspector": "./bin/jsinspector"
