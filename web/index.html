@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="paul vollmer">
+    <title>jsinspector</title>
+    <link rel="stylesheet" href="./assets/codemirror/codemirror.css">
+    <link rel="stylesheet" href="./assets/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <script type="text/javascript" src="./assets/codemirror/codemirror.js"></script>
+    <script type="text/javascript" src="./assets/codemirror/javascript/javascript.js"></script>
+    <script type="text/javascript" src="./assets/browserfs.min.js"></script>
+    <script type="text/javascript">
+      BrowserFS.install(window);
+      var lsfs = new BrowserFS.FileSystem.LocalStorage();
+      BrowserFS.initialize(lsfs);
+
+      var editorSource
+      window.onload = function() {
+        editorSource = CodeMirror.fromTextArea(document.getElementById('source'), {
+          lineNumbers: true,
+          mode: 'application/json',
+        });
+        editorSource.setSize('100%', '50%');
+      }
+    </script>
+
+    <script src="build/index.build.js" charset="utf-8"></script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="">jsinspector</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        </div>
+      </div>
+    </nav>
+
+    <textarea id="source">
+var x = 3.14
+
+function foo() {
+  console.log('hello')
+  console.log('world')
+  x = 5
+}
+
+function bar() {
+  console.log('hello')
+  console.log('world')
+  x = 5
+}
+</textarea>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          Min-Threshold: <input type="number" value="10" id="config-minthreshold">
+          Min-Instances: <input type="number" value="2" id="config-mininstances">
+          <button class="btn btn-info" onclick="process()">Process</button>
+        </div>
+        <div class="col-md-12" id="result"></div>
+      </div>
+    </div>
+
+  </body>
+</html>
