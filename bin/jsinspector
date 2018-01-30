@@ -11,15 +11,25 @@ program
   .version('0.0.1')
   .option('-f, --file [f]', 'the file we want to inspect', '')
   .option('-m, --min-threshold [t]', 'The minimum threshold to start', 10)
+  .option('-i, --min-instances [i]', 'minimum instances', 2)
+  .option('-d, --identifiers [i]', 'the identifiers', true)
+  .option('-l, --literals [i]', 'the identifiers', true)
   .option('-o, --output [f]', 'The output format [text, json, html]', 'text')
   .parse(process.argv)
 
 if (program.file === '') {
   console.log('missing filepath')
-  process.exit(127)
+  program.help()
+  process.exit(1)
 }
 
-inspector(program.file, {threshold: program.minThreshold}, (report) => {
+var inspectorConfig = {
+  threshold: program.minThreshold,
+  minInstances: program.minInstances,
+  identifiers: program.identifiers,
+  literals: program.literals
+}
+inspector(program.file, inspectorConfig, (report) => {
   switch (program.output) {
     case 'json':
       console.log(JSON.stringify(report, '', '  '))
@@ -28,10 +38,10 @@ inspector(program.file, {threshold: program.minThreshold}, (report) => {
       console.log(htmlReport(report))
       break
     case 'text':
-      console.log(textReport(report))
+      textReport(report)
       break
     default:
-      console.log(textReport(report))
+      textReport(report)
       break
   }
 })
@@ -40,8 +50,8 @@ function textReport (report) {
   if (report.result !== null) {
     console.log('highest threshold: ', report.highestThreshold)
     console.log('found duplication:')
-    for (var i = 0; i < report.result.length; i++) {
-      var data = report.result[i].instances
+    for (var i = 0; i < report.result.data.length; i++) {
+      var data = report.result.data[i].instances
       for (var j = 0; j < data.length; j++) {
         console.log(`\nLine from ${data[j].lines[0]} to ${data[j].lines[1]}`)
         console.log(colors.yellow(data[j].code))
@@ -77,14 +87,14 @@ function htmlReport (report) {
 
   html.push('<div>')
   html.push('<h2>threshold matrix</h2>')
-  html.push('<table>')
+  html.push('<table class="table">')
 
   // var lastData = null
   if (report.result !== null) {
     for (var d = report.data.length - 1; d >= 0; d--) {
-      html.push('<tr>')
+      html.push('<tr border="1">')
       html.push('<td>')
-      html.push(`threshold: ${report.data[d].threshold}`)
+      html.push(`threshold: ${report.data[d].config.threshold}`)
       html.push('</td>')
 
       for (var j = 0; j < report.data[d].data.length; j++) {
@@ -96,8 +106,10 @@ function htmlReport (report) {
           // lastInst = report.data[d].data[j].instances[ic]
           // lastData = lastInst
           // latest = report.data[d].data[j].instances[ic].code
+          html.push('<div>')
           html.push(`<code>line ${report.data[d].data[j].instances[ic].lines}</code>`)
           html.push('<pre>' + report.data[d].data[j].instances[ic].code + '</pre>')
+          html.push('</div>')
           // }
         }
         html.push('</td>')
