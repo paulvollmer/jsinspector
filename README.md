@@ -1,4 +1,4 @@
-# jsinspector [![Build Status](https://travis-ci.org/paulvollmer/jsinspector.svg?branch=master)](https://travis-ci.org/paulvollmer/jsinspector)
+# jsinspector [![Build Status](https://travis-ci.org/paulvollmer/jsinspector.svg?branch=master)](https://travis-ci.org/paulvollmer/jsinspector) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/paulvollmer/jsinspector/blob/master/LICENSE)
 
 Detect copy-pasted and structurally similar JavaScript code based on the `jsinspect` tool but with a automated threshold parameter.
 the tool will be count the threshold up to the highest number to find the biggest code duplication.
